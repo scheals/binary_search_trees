@@ -8,5 +8,4 @@ class Tree
   def initialize(node = nil)
     @root = node
   end
-
 end
