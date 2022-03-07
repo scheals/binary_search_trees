@@ -14,14 +14,32 @@ class Tree
     return nil if front > back
 
     middle = (front + back) / 2
-    node = Node.new(array[middle])
+    node = create_node(array[middle])
     node.left_node = build_tree(array, front, middle - 1)
     node.right_node = build_tree(array, middle + 1, back)
     @root = node
   end
 
+  def insert(node, current_node = root)
+    if node > current_node
+      return current_node.right_node = node if current_node.right_node.nil?
+
+      insert(node, current_node.right_node)
+    end
+    if node < current_node
+      return current_node.left_node = node if current_node.left_node.nil?
+
+      insert(node, current_node.left_node)
+    end
+    node
+  end
+
+  def create_node(value)
+    Node.new(value)
+  end
+
   def pretty_print(node = @root, prefix = '', is_left: true)
-    pretty_print(node.right_node, "#{prefix}#{is_left ? '│   ' : '    '}", is_left: false) if node.left_node
+    pretty_print(node.right_node, "#{prefix}#{is_left ? '│   ' : '    '}", is_left: false) if node.right_node
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.value}"
     pretty_print(node.left_node, "#{prefix}#{is_left ? '    ' : '│   '}", is_left: true) if node.left_node
   end

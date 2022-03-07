@@ -8,4 +8,11 @@ back = test_array.length - 1
 tree = Tree.new
 p tree.build_tree(test_array, 0, back)
 tree.pretty_print
-p tree
+tree.insert(Node.new(10))
+tree.pretty_print
+tree.insert(Node.new(2))
+tree.pretty_print
+tree.insert(Node.new(6))
+tree.pretty_print
+tree.insert(Node.new(22))
+tree.pretty_print
