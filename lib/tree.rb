@@ -20,18 +20,26 @@ class Tree
     @root = node
   end
 
-  def insert(node, current_node = root)
-    if node > current_node
-      return current_node.right_node = node if current_node.right_node.nil?
+  def insert(value, current_node = root)
+    node = create_node(value)
+    insert_sorter(node, current_node)
+  end
 
-      insert(node, current_node.right_node)
-    end
-    if node < current_node
-      return current_node.left_node = node if current_node.left_node.nil?
+  def insert_sorter(node, current_node)
+    return insert_left(node, current_node) if node < current_node
+    return insert_right(node, current_node) if node > current_node
+  end
 
-      insert(node, current_node.left_node)
-    end
-    node
+  def insert_left(node, current_node)
+    return current_node.left_node = node if current_node.left_node.nil?
+
+    insert_sorter(node, current_node.left_node)
+  end
+
+  def insert_right(node, current_node)
+    return current_node.right_node = node if current_node.right_node.nil?
+
+    insert_sorter(node, current_node.right_node)
   end
 
   def create_node(value)
