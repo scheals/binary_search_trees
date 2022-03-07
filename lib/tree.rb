@@ -46,6 +46,38 @@ class Tree
     Node.new(value)
   end
 
+  def delete(value, next_node = root)
+    node = create_node(value)
+    return nil if seeker(node).nil?
+
+
+  end
+
+  def find(value)
+    node = create_node(value)
+    seeker(node)
+  end
+
+  def seeker(node, current_node = root)
+    return current_node if node == current_node
+    return seek_left(node, current_node.left_node) if node < current_node
+    return seek_right(node, current_node.right_node) if node > current_node
+  end
+
+  def seek_left(node, current_node)
+    return current_node if current_node == node
+    return nil if current_node.leaf?
+
+    seeker(node, current_node)
+  end
+
+  def seek_right(node, current_node)
+    return current_node if current_node == node
+    return nil if current_node.leaf?
+
+    seeker(node, current_node)
+  end
+
   def pretty_print(node = @root, prefix = '', is_left: true)
     pretty_print(node.right_node, "#{prefix}#{is_left ? '│   ' : '    '}", is_left: false) if node.right_node
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.value}"

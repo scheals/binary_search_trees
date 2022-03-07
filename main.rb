@@ -14,5 +14,6 @@ tree.insert(2)
 tree.pretty_print
 tree.insert(6)
 tree.pretty_print
-p tree.insert(22)
+p tree.insert(22).leaf?
 tree.pretty_print
+p tree.find(8)

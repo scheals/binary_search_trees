@@ -12,4 +12,10 @@ class Node
     @left_node = left_node
     @right_node = right_node
   end
+
+  def leaf?
+    return false if left_node || right_node
+
+    true
+  end
 end
