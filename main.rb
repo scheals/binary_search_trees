@@ -9,6 +9,7 @@ tree = Tree.new
 p tree.build_tree(test_array, 0, back)
 tree.pretty_print
 tree.insert(10)
+p tree.insert(10)
 tree.pretty_print
 tree.insert(2)
 tree.pretty_print
@@ -16,4 +17,3 @@ tree.insert(6)
 tree.pretty_print
 p tree.insert(22).leaf?
 tree.pretty_print
-p tree.find(8)

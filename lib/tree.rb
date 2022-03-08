@@ -23,6 +23,8 @@ class Tree
   end
 
   def insert(value, current_node = root)
+    return 'Duplicate value!' if find(value)
+
     node = create_node(value)
     insert_sorter(node, current_node)
   end
