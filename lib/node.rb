@@ -18,4 +18,10 @@ class Node
 
     true
   end
+
+  def parent?(node)
+    return true if left_node == node || right_node == node
+
+    false
+  end
 end

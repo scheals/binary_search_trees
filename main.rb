@@ -17,3 +17,6 @@ tree.insert(6)
 tree.pretty_print
 p tree.insert(22).leaf?
 tree.pretty_print
+p tree.delete(22)
+tree.pretty_print
+p tree.delete(22)
