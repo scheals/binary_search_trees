@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 require_relative './node'
+require_relative './printable'
 
 # This class handles balanced binary trees.
 class Tree
+  include Printable
   attr_reader :root
 
   def initialize(node = nil)
@@ -50,7 +52,6 @@ class Tree
     node = create_node(value)
     return nil if seeker(node).nil?
 
-
   end
 
   def find(value)
@@ -76,11 +77,5 @@ class Tree
     return nil if current_node.leaf?
 
     seeker(node, current_node)
-  end
-
-  def pretty_print(node = @root, prefix = '', is_left: true)
-    pretty_print(node.right_node, "#{prefix}#{is_left ? '│   ' : '    '}", is_left: false) if node.right_node
-    puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.value}"
-    pretty_print(node.left_node, "#{prefix}#{is_left ? '    ' : '│   '}", is_left: true) if node.left_node
   end
 end
