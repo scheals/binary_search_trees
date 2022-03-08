@@ -26,17 +26,18 @@ class Tree
     return 'Duplicate value!' if find(value)
 
     node = create_node(value)
-    insert_sorter(node, current_node)
+    insert_sort(node, current_node)
   end
 
   def delete(value, next_node = root)
+    return 'No value found!' if find(value).nil?
+
     node = create_node(value)
-    return nil if seeker(node).nil?
   end
 
   def find(value)
     node = create_node(value)
-    seeker(node)
+    seek(node)
   end
 
   private
@@ -45,7 +46,7 @@ class Tree
     Node.new(value)
   end
 
-  def seeker(node, current_node = root)
+  def seek(node, current_node = root)
     return current_node if node == current_node
     return seek_left(node, current_node.left_node) if node < current_node
     return seek_right(node, current_node.right_node) if node > current_node
@@ -55,17 +56,17 @@ class Tree
     return current_node if current_node == node
     return nil if current_node.leaf?
 
-    seeker(node, current_node)
+    seek(node, current_node)
   end
 
   def seek_right(node, current_node)
     return current_node if current_node == node
     return nil if current_node.leaf?
 
-    seeker(node, current_node)
+    seek(node, current_node)
   end
 
-  def insert_sorter(node, current_node)
+  def insert_sort(node, current_node)
     return insert_left(node, current_node) if node < current_node
     return insert_right(node, current_node) if node > current_node
   end
@@ -73,12 +74,12 @@ class Tree
   def insert_left(node, current_node)
     return current_node.left_node = node if current_node.left_node.nil?
 
-    insert_sorter(node, current_node.left_node)
+    insert_sort(node, current_node.left_node)
   end
 
   def insert_right(node, current_node)
     return current_node.right_node = node if current_node.right_node.nil?
 
-    insert_sorter(node, current_node.right_node)
+    insert_sort(node, current_node.right_node)
   end
 end
