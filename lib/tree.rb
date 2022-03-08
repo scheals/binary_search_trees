@@ -29,36 +29,20 @@ class Tree
     insert_sorter(node, current_node)
   end
 
-  def insert_sorter(node, current_node)
-    return insert_left(node, current_node) if node < current_node
-    return insert_right(node, current_node) if node > current_node
-  end
-
-  def insert_left(node, current_node)
-    return current_node.left_node = node if current_node.left_node.nil?
-
-    insert_sorter(node, current_node.left_node)
-  end
-
-  def insert_right(node, current_node)
-    return current_node.right_node = node if current_node.right_node.nil?
-
-    insert_sorter(node, current_node.right_node)
-  end
-
-  def create_node(value)
-    Node.new(value)
-  end
-
   def delete(value, next_node = root)
     node = create_node(value)
     return nil if seeker(node).nil?
-
   end
 
   def find(value)
     node = create_node(value)
     seeker(node)
+  end
+
+  private
+
+  def create_node(value)
+    Node.new(value)
   end
 
   def seeker(node, current_node = root)
@@ -79,5 +63,22 @@ class Tree
     return nil if current_node.leaf?
 
     seeker(node, current_node)
+  end
+
+  def insert_sorter(node, current_node)
+    return insert_left(node, current_node) if node < current_node
+    return insert_right(node, current_node) if node > current_node
+  end
+
+  def insert_left(node, current_node)
+    return current_node.left_node = node if current_node.left_node.nil?
+
+    insert_sorter(node, current_node.left_node)
+  end
+
+  def insert_right(node, current_node)
+    return current_node.right_node = node if current_node.right_node.nil?
+
+    insert_sorter(node, current_node.right_node)
   end
 end
