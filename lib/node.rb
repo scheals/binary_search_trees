@@ -24,4 +24,16 @@ class Node
 
     false
   end
+
+  def min_child
+    current_node = left_node
+    current_node = current_node.left_node while current_node.left_node
+    current_node
+  end
+
+  def max_child
+    current_node = right_node
+    current_node = current_node.right_node while current_node.right_node
+    current_node
+  end
 end
