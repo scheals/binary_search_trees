@@ -21,4 +21,8 @@ module Comparable
   def ==(other)
     value == other.value
   end
+
+  def <=>(other)
+    value <=> other.value
+  end
 end
