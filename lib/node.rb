@@ -55,4 +55,12 @@ class Node
     current_node = current_node.right_node while current_node.right_node
     current_node
   end
+
+  def successor
+    right_node.min_child
+  end
+
+  def predecessor
+    left_node.max_child
+  end
 end

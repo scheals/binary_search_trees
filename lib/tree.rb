@@ -47,6 +47,16 @@ class Tree
       else
         parent_node.right_node = node_to_delete.right_node || node_to_delete.left_node
       end
+    else
+      successor = node_to_delete.successor
+      if node_to_delete.right_node == successor
+        if parent_node.left_node == node_to_delete
+          parent_node.left_node = successor
+        else
+          parent_node.right_node = successor
+        end
+        successor.left_node = node_to_delete.left_node
+      end
     end
     node
   end
