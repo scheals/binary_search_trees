@@ -25,14 +25,33 @@ class Node
     false
   end
 
+  def one_child?
+    return true if left_child? && !right_child?
+    return true if right_child? && !left_child?
+
+    false
+  end
+
+  def left_child?
+    return true if left_node
+
+    false
+  end
+
+  def right_child?
+    return true if right_node
+
+    false
+  end
+
   def min_child
-    current_node = left_node
+    current_node = self
     current_node = current_node.left_node while current_node.left_node
     current_node
   end
 
   def max_child
-    current_node = right_node
+    current_node = self
     current_node = current_node.right_node while current_node.right_node
     current_node
   end

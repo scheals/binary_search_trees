@@ -41,6 +41,12 @@ class Tree
       else
         parent_node.right_node = nil
       end
+    elsif node_to_delete.one_child?
+      if parent_node.left_node == node_to_delete
+        parent_node.left_node = node_to_delete.left_node || node_to_delete.right_node
+      else
+        parent_node.right_node = node_to_delete.right_node || node_to_delete.left_node
+      end
     end
     node
   end
