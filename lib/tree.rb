@@ -32,8 +32,7 @@ class Tree
   def delete(value)
     return 'No value found!' if find(value).nil?
 
-    node = create_node(value)
-    node_to_delete = seek(node)
+    node_to_delete = find(value)
     parent_node = seek_parent(node_to_delete)
     if node_to_delete.leaf?
       if parent_node.left_node == node_to_delete
@@ -56,9 +55,19 @@ class Tree
           parent_node.right_node = successor
         end
         successor.left_node = node_to_delete.left_node
+      else
+        successor_parent = seek_parent(successor)
+        if parent_node.left_node == node_to_delete
+          parent_node.left_node = successor
+        else
+          parent_node.right_node = successor
+        end
+        successor_parent.left_node = successor.right_node
+        successor.right_node = node_to_delete.right_node
+        successor.left_node = node_to_delete.left_node
       end
     end
-    node
+    node_to_delete
   end
 
   def find(value)
