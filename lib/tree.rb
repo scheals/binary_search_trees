@@ -35,39 +35,51 @@ class Tree
     node_to_delete = find(value)
     parent_node = seek_parent(node_to_delete)
     if node_to_delete.leaf?
-      if parent_node.left_node == node_to_delete
-        parent_node.left_node = nil
-      else
-        parent_node.right_node = nil
-      end
+      delete_leaf(node_to_delete, parent_node)
     elsif node_to_delete.one_child?
-      if parent_node.left_node == node_to_delete
-        parent_node.left_node = node_to_delete.left_node || node_to_delete.right_node
-      else
-        parent_node.right_node = node_to_delete.right_node || node_to_delete.left_node
-      end
+      delete_singleton(node_to_delete, parent_node)
     else
-      successor = node_to_delete.successor
-      if node_to_delete.right_node == successor
-        if parent_node.left_node == node_to_delete
-          parent_node.left_node = successor
-        else
-          parent_node.right_node = successor
-        end
-        successor.left_node = node_to_delete.left_node
-      else
-        successor_parent = seek_parent(successor)
-        if parent_node.left_node == node_to_delete
-          parent_node.left_node = successor
-        else
-          parent_node.right_node = successor
-        end
-        successor_parent.left_node = successor.right_node
-        successor.right_node = node_to_delete.right_node
-        successor.left_node = node_to_delete.left_node
-      end
+      delete_branch(node_to_delete, parent_node)
     end
     node_to_delete
+  end
+
+  def delete_leaf(node, parent)
+    if parent.left_node == node
+      parent.left_node = nil
+    else
+      parent.right_node = nil
+    end
+  end
+
+  def delete_singleton(node, parent)
+    if parent.left_node == node
+      parent.left_node = node.left_node || node.right_node
+    else
+      parent.right_node = node.right_node || node.left_node
+    end
+  end
+
+  def delete_branch(node, parent)
+    successor = node.successor
+    if node.right_node == successor
+      if parent.left_node == node
+        parent.left_node = successor
+      else
+        parent.right_node = successor
+      end
+      successor.left_node = node.left_node
+    else
+      successor_parent = seek_parent(successor)
+      if parent.left_node == node
+        parent.left_node = successor
+      else
+        parent.right_node = successor
+      end
+      successor_parent.left_node = successor.right_node
+      successor.right_node = node.right_node
+      successor.left_node = node.left_node
+    end
   end
 
   def find(value)
