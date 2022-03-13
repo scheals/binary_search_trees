@@ -101,6 +101,18 @@ class Tree
     seek_parent(node)
   end
 
+  def depth(node)
+    return "The depth of #{node} is: 0" if node == root
+
+    current_node = node
+    counter = 0
+    until current_node == root
+      current_node = seek_parent(current_node)
+      counter += 1
+    end
+    "The depth of #{node} is: #{counter}"
+  end
+
   private
 
   def create_node(value)
