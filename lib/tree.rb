@@ -52,6 +52,45 @@ class Tree
     end
   end
 
+  def preorder(node = root, result = [], &block)
+    return result if node.nil?
+
+    if block_given?
+      result << yield(node)
+    else
+      result.push(node.value)
+    end
+    preorder(node.left_node, result, &block)
+    preorder(node.right_node, result, &block)
+    result
+  end
+
+  def inorder(node = root, result = [], &block)
+    return result if node.nil?
+
+    inorder(node.left_node, result, &block)
+    if block_given?
+      result << yield(node)
+    else
+      result.push(node.value)
+    end
+    inorder(node.right_node, result, &block)
+    result
+  end
+
+  def postorder(node = root, result = [], &block)
+    return result if node.nil?
+
+    postorder(node.left_node, result, &block)
+    postorder(node.right_node, result, &block)
+    if block_given?
+      result << yield(node)
+    else
+      result.push(node.value)
+    end
+    result
+  end
+
   def find(value)
     node = create_node(value)
     seek(node)
