@@ -44,16 +44,12 @@ class Tree
     node_to_delete
   end
 
-  def level_order
-    result = []
-    queue = [root]
-    until queue.empty?
-      result.push(queue.first.value)
-      queue.push(queue.first.left_node) if queue.first.left_node
-      queue.push(queue.first.right_node) if queue.first.right_node
-      queue.shift
+  def level_order(&block)
+    if block_given?
+      level_order_block([root], [], &block)
+    else
+      level_order_no_block([root], [])
     end
-    result
   end
 
   def find(value)
@@ -165,5 +161,25 @@ class Tree
       successor.right_node = node.right_node
       successor.left_node = node.left_node
     end
+  end
+
+  def level_order_block(queue, result)
+    until queue.empty?
+      result << yield(queue.first)
+      queue.push(queue.first.left_node) if queue.first.left_node
+      queue.push(queue.first.right_node) if queue.first.right_node
+      queue.shift
+    end
+    result
+  end
+
+  def level_order_no_block(queue, result)
+    until queue.empty?
+      result.push(queue.first.value)
+      queue.push(queue.first.left_node) if queue.first.left_node
+      queue.push(queue.first.right_node) if queue.first.right_node
+      queue.shift
+    end
+    result
   end
 end
