@@ -44,42 +44,16 @@ class Tree
     node_to_delete
   end
 
-  def delete_leaf(node, parent)
-    if parent.left_node == node
-      parent.left_node = nil
-    else
-      parent.right_node = nil
+  def level_order
+    result = []
+    queue = [root]
+    until queue.empty?
+      result.push(queue.first.value)
+      queue.push(queue.first.left_node) if queue.first.left_node
+      queue.push(queue.first.right_node) if queue.first.right_node
+      queue.shift
     end
-  end
-
-  def delete_singleton(node, parent)
-    if parent.left_node == node
-      parent.left_node = node.left_node || node.right_node
-    else
-      parent.right_node = node.right_node || node.left_node
-    end
-  end
-
-  def delete_branch(node, parent)
-    successor = node.successor
-    if node.right_node == successor
-      if parent.left_node == node
-        parent.left_node = successor
-      else
-        parent.right_node = successor
-      end
-      successor.left_node = node.left_node
-    else
-      successor_parent = seek_parent(successor)
-      if parent.left_node == node
-        parent.left_node = successor
-      else
-        parent.right_node = successor
-      end
-      successor_parent.left_node = successor.right_node
-      successor.right_node = node.right_node
-      successor.left_node = node.left_node
-    end
+    result
   end
 
   def find(value)
@@ -153,5 +127,43 @@ class Tree
     return current_node.right_node = node if current_node.right_node.nil?
 
     insert_sort(node, current_node.right_node)
+  end
+
+  def delete_leaf(node, parent)
+    if parent.left_node == node
+      parent.left_node = nil
+    else
+      parent.right_node = nil
+    end
+  end
+
+  def delete_singleton(node, parent)
+    if parent.left_node == node
+      parent.left_node = node.left_node || node.right_node
+    else
+      parent.right_node = node.right_node || node.left_node
+    end
+  end
+
+  def delete_branch(node, parent)
+    successor = node.successor
+    if node.right_node == successor
+      if parent.left_node == node
+        parent.left_node = successor
+      else
+        parent.right_node = successor
+      end
+      successor.left_node = node.left_node
+    else
+      successor_parent = seek_parent(successor)
+      if parent.left_node == node
+        parent.left_node = successor
+      else
+        parent.right_node = successor
+      end
+      successor_parent.left_node = successor.right_node
+      successor.right_node = node.right_node
+      successor.left_node = node.left_node
+    end
   end
 end
