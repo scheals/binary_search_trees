@@ -104,13 +104,17 @@ class Tree
   def depth(node)
     return "The depth of #{node} is: 0" if node == root
 
-    current_node = node
-    counter = 0
-    until current_node == root
-      current_node = seek_parent(current_node)
-      counter += 1
-    end
+    counter = count_distance(node, root)
     "The depth of #{node} is: #{counter}"
+  end
+
+  def height(node)
+    return "The height of #{node} is: 0" if node.leaf?
+
+    leaves = preorder(node) { |candidate| candidate if candidate.leaf? }.compact
+    distances = []
+    leaves.each { |leaf| distances << count_distance(leaf, node) }
+    "The height of #{node} is: #{distances.max}"
   end
 
   private
@@ -232,5 +236,14 @@ class Tree
       queue.shift
     end
     result
+  end
+
+  def count_distance(start_node, end_node)
+    counter = 0
+    until start_node == end_node
+      start_node = seek_parent(start_node)
+      counter += 1
+    end
+    counter
   end
 end
