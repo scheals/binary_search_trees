@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-#This module handles objects that can be printed as binary trees.
+# This module handles objects that can be printed as binary trees.
 module Printable
   def pretty_print(node = @root, prefix = '', is_left: true)
     pretty_print(node.right_node, "#{prefix}#{is_left ? '│   ' : '    '}", is_left: false) if node.right_node
