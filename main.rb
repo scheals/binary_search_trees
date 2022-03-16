@@ -3,20 +3,29 @@
 require_relative 'lib/node'
 require_relative 'lib/tree'
 
-test_array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324].uniq.sort
-back = test_array.length - 1
-tree = Tree.new
-p tree.build_tree(test_array, 0, back)
-tree.pretty_print
-tree.insert(10)
-p tree.insert(10)
-tree.pretty_print
-tree.insert(2)
-tree.pretty_print
-tree.insert(6)
-tree.pretty_print
-p tree.insert(22).leaf?
-tree.pretty_print
-p tree.delete(22)
-tree.pretty_print
-p tree.delete(22)
+def test
+  array = (Array.new(15) { rand(1..100) }).uniq.sort
+  back = array.length - 1
+  tree = Tree.new
+  tree.build_tree(array, 0, back)
+  tree.pretty_print
+  p tree.balanced?
+  p tree.level_order
+  p tree.preorder
+  p tree.inorder
+  p tree.postorder
+  10.times do
+    tree.insert(rand(101..200))
+  end
+  tree.pretty_print
+  p tree.balanced?
+  tree.rebalance
+  tree.pretty_print
+  p tree.balanced?
+  p tree.level_order
+  p tree.preorder
+  p tree.inorder
+  p tree.postorder
+  puts 'Test finished!'
+end
+test
