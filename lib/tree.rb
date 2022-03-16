@@ -23,7 +23,7 @@ class Tree
   end
 
   def insert(value)
-    return 'Duplicate value!' if find(value)
+    return 'Duplicate value!' if find_parent(value)
 
     node = create_node(value)
     insert_sort(node)
@@ -123,6 +123,14 @@ class Tree
     true
   end
 
+  def rebalance
+    return 'The tree is already balanced!' if balanced?
+
+    tree_array = inorder
+    back = tree_array.length - 1
+    build_tree(tree_array, 0, back)
+  end
+
   private
 
   def create_node(value)
@@ -136,15 +144,15 @@ class Tree
   end
 
   def seek_left(node, current_node)
+    return nil if current_node.nil? || current_node.leaf?
     return current_node if current_node == node
-    return nil if current_node.leaf?
 
     seek(node, current_node)
   end
 
   def seek_right(node, current_node)
+    return nil if current_node.nil? || current_node.leaf?
     return current_node if current_node == node
-    return nil if current_node.leaf?
 
     seek(node, current_node)
   end
@@ -156,15 +164,15 @@ class Tree
   end
 
   def seek_parent_left(node, current_node)
+    return nil if current_node.nil? || current_node.leaf?
     return current_node if current_node.parent?(node)
-    return nil if current_node.leaf?
 
     seek_parent(node, current_node)
   end
 
   def seek_parent_right(node, current_node)
+    return nil if current_node.nil? || current_node.leaf?
     return current_node if current_node.parent?(node)
-    return nil if current_node.leaf?
 
     seek_parent(node, current_node)
   end
