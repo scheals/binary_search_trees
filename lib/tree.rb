@@ -117,6 +117,12 @@ class Tree
     "The height of #{node} is: #{distances.max}"
   end
 
+  def balanced?
+    return false if check_balance.include?(false)
+
+    true
+  end
+
   private
 
   def create_node(value)
@@ -245,5 +251,13 @@ class Tree
       counter += 1
     end
     counter
+  end
+
+  def check_balance
+    level_order do |node|
+      left_height = node.left_node ? height(node.left_node).slice(-1).to_i : 0
+      right_height = node.right_node ? height(node.right_node).slice(-1).to_i : 0
+      left_height == right_height || left_height == right_height + 1 || left_height == right_height - 1
+    end
   end
 end
