@@ -175,15 +175,11 @@ class Tree
   end
 
   def insert_left(node, current_node)
-    return current_node.left_node = node if current_node.left_node.nil?
-
-    insert_sort(node, current_node.left_node)
+    current_node.left_node ? insert_sort(node, current_node.left_node) : current_node.left_node = node
   end
 
   def insert_right(node, current_node)
-    return current_node.right_node = node if current_node.right_node.nil?
-
-    insert_sort(node, current_node.right_node)
+    current_node.right_node ? insert_sort(node, current_node.right_node) : current_node.right_node = node
   end
 
   def delete_leaf(node, parent)
