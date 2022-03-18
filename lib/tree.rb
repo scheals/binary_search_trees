@@ -230,9 +230,9 @@ class Tree
 
   def check_balance
     level_order do |node|
-      left_height = node.left_node ? height(node.left_node).slice(-1).to_i : 0
-      right_height = node.right_node ? height(node.right_node).slice(-1).to_i : 0
-      left_height == right_height || left_height == right_height + 1 || left_height == right_height - 1
+      left_height = node.left_node ? height(node.left_node).slice(-1).to_i : -1
+      right_height = node.right_node ? height(node.right_node).slice(-1).to_i : -1
+      left_height - right_height >= -1 && left_height - right_height <= 1 ? true : false
     end
   end
 end
