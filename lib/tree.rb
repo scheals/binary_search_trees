@@ -59,11 +59,7 @@ class Tree
   def preorder(node = root, result = [], &block)
     return result if node.nil?
 
-    if block_given?
-      result << yield(node)
-    else
-      result.push(node.value)
-    end
+    result << (block_given? ? yield(node) : node.value)
     preorder(node.left_node, result, &block)
     preorder(node.right_node, result, &block)
     result
@@ -73,11 +69,7 @@ class Tree
     return result if node.nil?
 
     inorder(node.left_node, result, &block)
-    if block_given?
-      result << yield(node)
-    else
-      result.push(node.value)
-    end
+    result << (block_given? ? yield(node) : node.value)
     inorder(node.right_node, result, &block)
     result
   end
@@ -87,11 +79,7 @@ class Tree
 
     postorder(node.left_node, result, &block)
     postorder(node.right_node, result, &block)
-    if block_given?
-      result << yield(node)
-    else
-      result.push(node.value)
-    end
+    result << (block_given? ? yield(node) : node.value)
     result
   end
 
