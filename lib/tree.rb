@@ -232,7 +232,7 @@ class Tree
     level_order do |node|
       left_height = node.left_node ? height(node.left_node).slice(-1).to_i : -1
       right_height = node.right_node ? height(node.right_node).slice(-1).to_i : -1
-      left_height - right_height >= -1 && left_height - right_height <= 1 ? true : false
+      left_height - right_height >= -1 && left_height - right_height <= 1
     end
   end
 end
