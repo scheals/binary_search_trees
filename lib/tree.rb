@@ -12,13 +12,16 @@ class Tree
     @root = node
   end
 
-  def build_tree(array, front, back)
-    return nil if front > back
+  def build_tree(array)
+    return if array.empty?
 
-    middle = (front + back) / 2
-    node = create_node(array[middle])
-    node.left_node = build_tree(array, front, middle - 1)
-    node.right_node = build_tree(array, middle + 1, back)
+    prepared_array = array.uniq.sort
+    middle = prepared_array.length / 2
+    return create_node(prepared_array[0]) if prepared_array.length <= 1
+
+    node = create_node(prepared_array[middle])
+    node.left_node = build_tree(prepared_array[0...middle])
+    node.right_node = build_tree(prepared_array[(middle + 1)..-1])
     @root = node
   end
 
@@ -118,9 +121,7 @@ class Tree
   def rebalance
     return 'The tree is already balanced!' if balanced?
 
-    tree_array = inorder
-    back = tree_array.length - 1
-    build_tree(tree_array, 0, back)
+    build_tree(inorder)
   end
 
   private
