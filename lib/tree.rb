@@ -36,6 +36,8 @@ class Tree
     return 'No value found!' if find(value).nil?
 
     node_to_delete = find(value)
+    return delete_root if node_to_delete == root
+
     parent_node = seek_parent(node_to_delete)
     if node_to_delete.leaf?
       delete_leaf(node_to_delete, parent_node)
@@ -131,43 +133,25 @@ class Tree
   end
 
   def seek(node, current_node = root)
+    return nil if current_node.nil?
     return current_node if node == current_node
-    return seek_left(node, current_node.left_node) if node < current_node
-    return seek_right(node, current_node.right_node) if node > current_node
-  end
 
-  def seek_left(node, current_node)
-    return nil if current_node.nil? || current_node.leaf?
-    return current_node if current_node == node
-
-    seek(node, current_node)
-  end
-
-  def seek_right(node, current_node)
-    return nil if current_node.nil? || current_node.leaf?
-    return current_node if current_node == node
-
-    seek(node, current_node)
+    if node < current_node
+      seek(node, current_node.left_node)
+    else
+      seek(node, current_node.right_node)
+    end
   end
 
   def seek_parent(node, current_node = root)
-    return current_node if current_node.parent?(node)
-    return seek_parent_left(node, current_node.left_node) if node < current_node
-    return seek_parent_right(node, current_node.right_node) if node > current_node
-  end
-
-  def seek_parent_left(node, current_node)
-    return nil if current_node.nil? || current_node.leaf?
+    return nil if current_node.nil?
     return current_node if current_node.parent?(node)
 
-    seek_parent(node, current_node)
-  end
-
-  def seek_parent_right(node, current_node)
-    return nil if current_node.nil? || current_node.leaf?
-    return current_node if current_node.parent?(node)
-
-    seek_parent(node, current_node)
+    if node < current_node
+      seek_parent(node, current_node.left_node)
+    else
+      seek_parent(node, current_node.right_node)
+    end
   end
 
   def insert_sort(node, current_node = root)
@@ -218,6 +202,20 @@ class Tree
       successor_parent.left_node = successor.right_node
       successor.right_node = node.right_node
       successor.left_node = node.left_node
+    end
+  end
+
+  def delete_root
+    puts "#{root.value} is the value of root node of the tree. Deleting it will rebuild the tree without it."
+    puts 'Are you sure you want to delete it? [Y/n]'
+    choice = gets.chomp.to_s.downcase
+    case choice
+    when 'y'
+      build_tree(preorder[1..-1])
+    when 'n'
+      puts 'Root node has not been deleted.'
+    else
+      delete_root
     end
   end
 
